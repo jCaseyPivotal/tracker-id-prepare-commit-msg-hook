@@ -2,15 +2,30 @@
 
 # Assume variable called STORY_ID of format "#160594666"
 
-read -p "Enter the Story ID, or press enter to use variable STORY_ID: " USER_INPUT_STORY_ID </dev/tty
+STICKY_STORY_ID_FILE=~/.story_id
+
+if [ ! -f $STICKY_STORY_ID_FILE ]; then
+	touch $STICKY_STORY_ID_FILE
+fi
+
+STORY_ID_FROM_FILE=`cat $STICKY_STORY_ID_FILE`
+
+echo "Last commit message:"
+echo "--- --- ---"
+git log -1 --pretty=%B
+echo "--- --- ---"
+echo ""
+read -p "Enter a new Story ID, or press enter to use $STICKY_STORY_ID_FILE ($STORY_ID_FROM_FILE): " USER_INPUT_STORY_ID </dev/tty
 
 OUR_STORY_ID=""
 
 if [ ! -z "$USER_INPUT_STORY_ID" ]; then
 	OUR_STORY_ID=$USER_INPUT_STORY_ID
 else
-	OUR_STORY_ID=$STORY_ID
+	OUR_STORY_ID=$STORY_ID_FROM_FILE
 fi
+
+echo $OUR_STORY_ID > $STICKY_STORY_ID_FILE
 
 OUR_STORY_ID_WITHOUT_HASH=${OUR_STORY_ID#?}
 
