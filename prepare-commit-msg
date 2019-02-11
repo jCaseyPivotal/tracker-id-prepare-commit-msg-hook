@@ -31,4 +31,4 @@ OUR_STORY_ID_WITHOUT_HASH=${OUR_STORY_ID#?}
 
 COMMIT_MSG_FILE=$1
 
-echo "\n\n[$OUR_STORY_ID] https://www.pivotaltracker.com/story/show/$OUR_STORY_ID_WITHOUT_HASH\n\n$(cat $COMMIT_MSG_FILE)" > $COMMIT_MSG_FILE
+echo "\n\n[$OUR_STORY_ID] https://www.pivotaltracker.com/story/show/$OUR_STORY_ID_WITHOUT_HASH$(cat $COMMIT_MSG_FILE)" > $COMMIT_MSG_FILE
